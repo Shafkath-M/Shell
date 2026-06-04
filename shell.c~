@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+int main()
+{
+  char *prompt = NULL;
+  while(1)
+    {
+      printf("shshell> ");
+      
+    }
+}
