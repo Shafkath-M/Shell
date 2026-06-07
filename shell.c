@@ -7,6 +7,7 @@
 int main()
 {
   char *prompt = NULL;
+  char *args;
   while(1)
     {
       prompt = readline("shshell> ");
@@ -26,6 +27,13 @@ int main()
       else
 	{
 	  printf("%s\n", prompt);
+	  args = strtok(prompt, "-");
+
+	  while (args != NULL)
+	    {
+	      printf("%s\n", args);
+	      args = strtok(NULL, "-");
+	    }
 	  continue;
 	}
 
