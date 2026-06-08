@@ -1,0 +1,11 @@
+args[0]: echo
+args[1]: shafkath
+args[2]: (null)
+args[3]: (null)
+args[4]: (null)
+args[5]: (null)
+args[6]: (null)
+args[7]: (null)
+args[8]: (null)
+args[9]: (null)
+shafkath
