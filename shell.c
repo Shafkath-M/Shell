@@ -14,15 +14,17 @@ int main()
   
   while(1)
     {
+      // initialize / refressh the args buffer for the next command
       int token_count = 0;
-
       for (int i = 0; i < 10; i++)
 	{
 	  args[i] = NULL;
 	}
-      
+
+      // take user prompt
       prompt = readline("shshell> ");
-      
+
+      // exit
       if (strcmp(prompt, "exit") == 0)
 	{
 	  free(prompt);
@@ -31,7 +33,7 @@ int main()
       
       else
 	{
-	  // printf("%s\n", prompt);
+	  // tokenize prompt
 	  token = strtok(prompt, "- ");
 
 	  while (token != NULL)
@@ -44,7 +46,24 @@ int main()
 		  token = strtok(NULL, "-");
 	       
 	    }
-
+	  
+	  // handle cd command
+	  if (strcmp(args[0], "cd") == 0)
+	    {
+	      if (args[1] == NULL)
+		{
+		  chdir(getenv("HOME"));
+		}
+	      else
+		{
+		  if (chdir(args[1]) == -1)
+		    {
+		      perror("couldn't change directory");
+		    }
+		}
+	      continue;
+	    }
+	  	 
 	  pid_t pid = fork();
 
 	  if (pid < 0)
@@ -61,6 +80,7 @@ int main()
 		}
 	      execvp(args[0], args);
 	      perror("failed to execute ");
+	      continue;
 	    }
 
 	  if (pid > 0)
