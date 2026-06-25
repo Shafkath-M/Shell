@@ -123,9 +123,41 @@ int main()
 				printf("second_command[%d]: %s\n", i, second_command[i]);
 			}
 
-			//	pid_t first_pid = fork();
-			//	pid_t second_pid = fork();
+			int pipefd[2];
+			pipe(pipefd);
 
+			pid_t first_pid = fork();
+
+			if (first_pid == 0)
+			{
+				close(pipefd[0]);
+				dup2(pipefd[1], STDOUT_FILENO);
+				close(pipefd[1]);
+				execvp(first_command[0], first_command);
+				exit(1);
+			}
+
+			pid_t second_pid = fork();
+
+			if (second_pid == 0)
+			{
+				close(pipefd[1]);
+				dup2(pipefd[0], STDIN_FILENO);
+				close(pipefd[0]);
+				execvp(second_command[0], second_command);
+				exit(1);
+
+			}
+
+			close(pipefd[0]);
+			close(pipefd[1]);
+			wait(NULL);
+			wait(NULL);
+			continue;
+
+		}
+		else
+		{
 			// detect redirection
 			bool output_redirection = false;
 			int redirection_index = 0;
