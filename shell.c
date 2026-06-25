@@ -52,11 +52,6 @@ int main()
 				token = strtok(NULL, "- ");
 			}
 
-			for (int i = 0; i < MAX_ARGS; i++)
-				{
-					printf("args[%d]: %s\n", i, args[i]);
-				}
-
 			// handle cd command
 			if (strcmp(args[0], "cd") == 0)
 			{
@@ -90,8 +85,6 @@ int main()
 				}
 			}
 
-			// test print
-			printf("pipe index: %d\n", pipe_index);
 
 			if (pipe_symbol == true)
 			{
@@ -105,23 +98,12 @@ int main()
 			}
 			first_command[pipe_index] = NULL;
 			
-			
-			// test print
-			for (int i = 0; i <= pipe_index ; i++)
-			{
-				printf("first_command[%d]: %s\n", i, first_command[i]);
-			}
-
 			for (int i = 0; i < MAX_ARGS - pipe_index - 1; i++)
 			{
 				second_command[i] = args[i + pipe_index + 1];
 			}
 			second_command[MAX_ARGS - pipe_index - 1] = NULL;
-			// test print
-			for (int i = 0; i < MAX_ARGS - pipe_index - 1; i++)
-			{
-				printf("second_command[%d]: %s\n", i, second_command[i]);
-			}
+	
 
 			int pipefd[2];
 			pipe(pipefd);
